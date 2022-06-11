@@ -1,0 +1,49 @@
+﻿
+@{
+    System.Data.DataRowCollection writers = (System.Data.DataRowCollection)ViewData["writers"];
+    string writername, selected;
+
+    Library.Models.Library.DataTable2Row bookRow = (Library.Models.Library.DataTable2Row)ViewData["bookRow"];
+    string keyword = "";
+
+    if (bookRow.IsBookKeywordsNull()==false)
+    {
+        keyword = bookRow.BookKeywords;
+    }
+}
+
+<h2>Add</h2>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<form action="~/books/processBook" method="post">
+    <input type="text" name="bookName" id="bookName" placeholder="Kitap Adı" data-val="true" data-val-required="Bu alan boş geçilemez!" maxlength="100" value="@bookRow.BookName" />
+    <span class="field-validation-valid" data-valmsg-for="booksName" data-valmsg-replace="true"></span> <!-- valmsg-usernamein hata mesajlarını bu id de ver class hazır scriptin classı -->
+    <input type="text" name="keywords" placeholder="Keywords" maxlength="100" value="@keyword" />
+    <input type="hidden" name="id" value="@bookRow.id" />
+    <select name="writer">
+
+        @foreach (Library.Models.Library.WritesRow writersRow in writers)
+        {
+            selected = "";
+            writername = writersRow.writersName;
+            if (writersRow.IswritersSurnameNull() == false)
+            {
+                writername = writersRow.writersName + " " + writersRow.writersSurname;
+            }
+            if (writersRow.IswritersAkaNull() == false)
+            {
+                writername = writername + " (" + writersRow.writersAka + ")";
+            }
+            if(bookRow.Writer == writersRow.id)
+            {
+                selected = "selected";
+            }
+            <option value="@writersRow.id.ToString()" @selected>@writername</option>
+        }
+    </select>
+    <input type="submit" value="TAMAM" />
+</form>
+@if (ViewData["error"] != null)
+{
+    <span>@ViewData["error"]</span>
+}

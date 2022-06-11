@@ -1,0 +1,27 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link rel="stylesheet" href="~/stil.css" />
+</head>
+<body>
+    <form class="homeLogin" action="~/home/checklogin" method="post">
+        <label>Kullanıcı Adı:</label>
+        <input type="text" name="userName" placeholder="Kullanıcı Adi" />
+        <label>Şifre:</label>
+        <input type="password" name="password" placeholder="Şifre" />
+        <input type="submit" value="GiRİŞ" />
+    </form>
+    @if (ViewData["error"] != null) 
+    { 
+        <p>@ViewData["error"]</p>
+    }
+</body>
+</html>

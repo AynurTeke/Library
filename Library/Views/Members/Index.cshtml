@@ -1,0 +1,45 @@
+﻿@{
+    System.Data.DataRowCollection members = (System.Data.DataRowCollection)ViewData["members"];
+    string banned;
+}
+
+<link rel="stylesheet" href="~/stil.css" />
+<script>
+    function Delete(id) {
+        if (confirm("Emin misiniz?") == true) {
+            location.assign("@Url.Action("Delete", "Members")/" + id.toString());
+        }
+    }
+</script>
+<table>
+    <thead>
+        <tr>
+            <th>T.C. Kimlik No</th>
+            <th>Adı</th>
+            <th>E-posta</th>
+            <th>Cezalı</th>
+        </tr>
+    </thead>
+
+    @foreach (Library.Models.Library.MembersRow memberRow in members)
+    {
+        banned = "";
+        if (memberRow.Banned == true)
+        {
+            banned = "checked";
+        }
+        <tr>
+            <td><a href="~/members/update/@memberRow.IdNo.ToString()">@memberRow.IdNo.ToString()</a></td>
+            <td>@memberRow.MemberName @memberRow.MemberSurname</td>
+            <td>
+                <a href="mailto:@memberRow.MemberEMail">@memberRow.MemberEMail</a>
+            </td>
+            <td>
+                <input type="checkbox" readonly @banned/>
+            </td>
+            <td>
+                <button onclick="Delete(@memberRow.IdNo)">Sil</button>
+            </td>
+        </tr>
+    }
+</table>

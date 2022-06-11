@@ -1,0 +1,44 @@
+﻿@{
+    System.Data.DataRowCollection writers = (System.Data.DataRowCollection)ViewData["writers"];
+}
+
+<link rel="stylesheet" href="~/stil.css" />
+<script>
+    function Delete(id) {
+        if (confirm("Emin misiniz?") == true) {
+            location.assign("@Url.Action("Delete", "Writers")/" + id.toString());
+        }
+    }
+</script>
+<a id="writersAdd" href="~/writers/Add">Yazar Ekle</a>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Adı Soyadı</th>
+            <th>Mahlas</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    @foreach (Library.Models.Library.WritesRow writersRow in writers)
+    {
+        <tr>
+            <td><a href="~/writers/update/@writersRow.id.ToString()">@writersRow.id.ToString()</a></td>
+            <td>
+                @writersRow.writersName
+                @if (writersRow.IswritersSurnameNull() == false)
+                {
+                    @writersRow.writersSurname
+                }
+            </td>
+            <td>
+                @if (writersRow.IswritersAkaNull() == false)
+                {
+                    @writersRow.writersAka
+                }
+            </td>
+            <td><button onclick="Delete(@writersRow.id)">Sil</button></td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,35 @@
+﻿@{
+    System.Data.DataRowCollection users = (System.Data.DataRowCollection)ViewData["users"];
+}
+
+<script>
+    function Delete(id) {
+        if (confirm("Emin misiniz?") == true) {
+            location.assign("@Url.Action("Delete", "Users")/" + id.toString());
+        }
+    }
+</script>
+<link rel="stylesheet" href="~/stil.css" />
+
+<a id="usersAdd" href="~/users/Add">Kullanıcı Ekle</a>
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Kullanıcı Adı</th>
+            <th>E-posta</th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (Library.Models.Library.Users1Row usersRow in users)
+    {
+        <tr>
+            <td><a href="~/users/update/@usersRow.id.ToString()">@usersRow.id.ToString()</a></td>
+            <td>@usersRow.usersName</td>
+            <td>
+                <a href="mailto:@usersRow.usersmail">@usersRow.usersmail</a>
+            </td>
+            <td><button onclick="Delete(@usersRow.id)">Sil</button></td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,24 @@
+﻿
+@{
+    Library.Models.Library.Users1Row userRow = (Library.Models.Library.Users1Row)ViewData["userRow"];
+}
+
+<h2>Add</h2>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<form action="~/users/processuser" method="post">
+    <input type="text" name="userName" id="userName" placeholder="Kullanıcı Adı" data-val="true" data-val-required="Bu alan boş geçilemez!" maxlength="50" value="@userRow.usersName" />
+    <span class="field-validation-valid" data-valmsg-for="userName" data-valmsg-replace="true"></span> <!-- valmsg-usernamein hata mesajlarını bu id de ver class hazır scriptin classı -->
+    <input type="password" name="password" id="password" placeholder="Parola" data-val="true" data-val-required="Bu alan boş geçilemez!" value="    " />
+    <span class="field-validation-valid" data-valmsg-for="password" data-valmsg-replace="true"></span>
+    <input type="password" placeholder="Parola(Tekrar)" id="password2" data-val="true" data-val-equalto="Şifreler aynı değil" data-val-equalto-other="#password" value="    " />
+    <span class="field-validation-valid" data-valmsg-for="password2" data-valmsg-replace="true"></span>
+    <input type="email" name="eMail" id="eMail" placeholder="E-Posta" data-val="true" data-val-required="Bu alan boş geçilemez!" data-val-email="Geçersiz e-posta adresi" maxlength="100"  value="@userRow.usersmail"/>
+    <span class="field-validation-valid" data-valmsg-for="EMail" data-valmsg-replace="true"></span>
+    <input type="hidden" name="id" value="@userRow.id" />
+    <input type="submit" value="TAMAM" />
+</form>
+@if (ViewData["error"] != null)
+{
+    <span>@ViewData["error"]</span>
+}
